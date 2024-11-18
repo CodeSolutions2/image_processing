@@ -4,20 +4,12 @@
 <body>
 
 <h1>Image processing library</h1>
-
   
 <ol type="A">
 	<li></li>
   	<li></li>
 </ol>
   
-<canvas class="canvasElement_className" id="canvasElement" width="256" height="256" style="display:block"></canvas>
-
-<div id="data_display" style="display:block; text-align: left; width: 600px;"></div>
-
-<div class="obj_className" id="obj_div"></div>
-	
-
 <label for="select_dropdown_option_label">Select an image processing example:</label>
 <select name="dropdown_options" id="dropdown_options" style="display:block">
   <option value="---">Select an option</option>
@@ -27,14 +19,21 @@
 
 <button id="run_selection" onclick="run_selection()" style="display:block;">run_selection</button>
 
+<!-- ---------------------------------------- -->
+
+<div id="data_display" style="display:block; text-align: left; width: 600px;"></div>
+
+<div class="obj_className" id="obj_div"></div>
+
+<!-- ---------------------------------------- -->
+	
 <style>
 canvas {border: 1px solid black; position: absolute; display: inline-block; z-index: 0; top: 175px;}
 </style>
 
+<!-- ---------------------------------------- -->
 
 <script src="process_data_w_ParallelProcessing.js" type="text/javascript"></script>
-
-
 <script src="image_processing_functions.js" type="text/javascript"></script>
 
 <!-- ---------------------------------------- -->
@@ -75,8 +74,11 @@ async function draw_image_w_NoParallelProcessing() {
 	// --------------------
 	
 	// Canvas to obtain data from.
-	const [ctx, canvasElement] = await create_dynamic_canvasElement('canvasId');
+	const [ctx, canvasElement] = await create_dynamic_canvasElement('canvasId', 'canvasElement_className');
 
+	// Add the canvas to the DOM
+	document.getElementById('data_display').appendChild(canvasElement);
+	
 	// --------------------
 	
 	await create_a_solid_image(ctx);
@@ -101,13 +103,33 @@ async function draw_image_w_NoParallelProcessing() {
 
 async function process_data_w_ParallelProcessing() {
 
-	const ctx = canvasElement.getContext("2d");
+	// Canvas to obtain data from.
+	const [ctx, canvasElement] = await create_dynamic_canvasElement('canvasId', 'canvasElement_className');
 
+	// Add the canvas to the DOM
+	document.getElementById('data_display').appendChild(canvasElement);
+		    
 	// --------------------
 
 	// Prints original image to canvas, without parallel processing result
 	await create_a_solid_image(ctx);
 
+	// --------------------
+
+	// Obtain canvas data as an array
+	const normalArray = await convert_canvas_into_ImageData(ctx);
+	console.log("index.html - normalArray: ", normalArray);
+
+	// Output normalArray as a string, to pass it to main.js
+	document.getElementById("obj_div").innerHTML = JSON.stringify({ data: normalArray, type: 'process'});
+
+	// --------------------
+
+	// Call main.js
+	const mainScript = document.createElement('script');
+	mainScript.src = 'process_data_w_ParallelProcessing_main.js';
+	document.body.appendChild(mainScript);
+	
 	// --------------------
 
 }
