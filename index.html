@@ -11,7 +11,7 @@
   	<li></li>
 </ol>
   
-<canvas class="canvasElement_className" id="canvasElement_onscreen" width="256" height="256" style="display:block"></canvas>
+<canvas class="canvasElement_className" id="canvasElement" width="256" height="256" style="display:block"></canvas>
 
 <div id="data_display" style="display:block; text-align: left; width: 600px;"></div>
 
@@ -99,8 +99,27 @@ async function draw_image_w_NoParallelProcessing() {
 
 // -------------------------------------------------
 
+async function process_data_w_ParallelProcessing() {
+
+	const ctx = canvasElement.getContext("2d");
+
+	// --------------------
+
+	// Prints original image to canvas, without parallel processing result
+	await create_a_solid_image(ctx_onscreen);
+
+	// --------------------
+
+}
+	
+// -------------------------------------------------
 
 
+// -------------------------------------------------
+
+// -------------------------------------------------
+
+// -------------------------------------------------
 
 </script>
 </body>
