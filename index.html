@@ -33,8 +33,16 @@ canvas {border: 1px solid black; position: absolute; display: inline-block; z-in
 
 <!-- ---------------------------------------- -->
 
-<script src="process_data_w_ParallelProcessing.js" type="text/javascript"></script>
-<script src="image_processing_functions.js" type="text/javascript"></script>
+<!-- Way 0: WORKS! -->
+<script type="text/javascript" src="dist/image_processing_functions.js"></script>
+
+<!-- Way 1a: WORKS! -->
+<script type="module">
+import { create_dynamic_canvasElement } from "./dist/image_processing_functions.js";
+module0.create_dynamic_canvasElement = create_dynamic_canvasElement;
+</script>
+	
+<script src="./cfg/process_data_w_ParallelProcessing.js" type="text/javascript"></script>
 
 <!-- ---------------------------------------- -->
   
