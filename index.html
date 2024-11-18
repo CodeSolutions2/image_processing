@@ -31,20 +31,6 @@ A compilation of image processing functions that are useful in MLOPS/Front-end d
 <style>
 canvas {border: 1px solid black; position: absolute; display: inline-block; z-index: 0; top: 175px;}
 </style>
-
-<!-- ---------------------------------------- -->
-
-<!-- Way 0: -->
-<!-- <script src="./dist/image_processing_functions.js" type="text/javascript"></script> -->
-
-<!-- Way 1a:
-<script type="module">
-import { create_dynamic_canvasElement, create_a_solid_image, convert_canvas_into_ImageData, modify_canvas_data } from "./dist/image_processing_functions.js";
-module0.create_dynamic_canvasElement = create_dynamic_canvasElement;
-module1.create_a_solid_image = create_a_solid_image;
-module2.convert_canvas_into_ImageData = convert_canvas_into_ImageData;
-module3.modify_canvas_data = modify_canvas_data;
-</script> -->
 	
 <script src="./cfg/process_data_w_ParallelProcessing.js" type="text/javascript"></script>
 
@@ -101,8 +87,6 @@ async function draw_image_w_NoParallelProcessing() {
 	// --------------------
 	
 	// Canvas to obtain data from.
-	// const [ctx, canvasElement] = await module0.create_dynamic_canvasElement('canvasId', 'canvasElement_className');
-	// OR
 	const [ctx, canvasElement] = await create_dynamic_canvasElement('canvasId', 'canvasElement_className');
 
 	// Add the canvas to the DOM
@@ -117,13 +101,9 @@ async function draw_image_w_NoParallelProcessing() {
 	// --------------------
 
 	// Obtain canvas data as an array
-	// const normalArray = await module2.convert_canvas_into_ImageData(ctx);
-	// OR
 	const normalArray = await convert_canvas_into_ImageData(ctx);
 
 	// Modify the canvas image data 
-	// const Typedarray = await module3.modify_canvas_data(normalArray);
-	// OR
 	const Typedarray = await modify_canvas_data(normalArray);
 
 	// --------------------
@@ -138,8 +118,6 @@ async function draw_image_w_NoParallelProcessing() {
 async function process_data_w_ParallelProcessing() {
 
 	// Canvas to obtain data from.
-	// const [ctx, canvasElement] = await module0.create_dynamic_canvasElement('canvasId', 'canvasElement_className');
-	// OR
 	const [ctx, canvasElement] = await create_dynamic_canvasElement('canvasId', 'canvasElement_className');
 
 	// Add the canvas to the DOM
@@ -147,16 +125,12 @@ async function process_data_w_ParallelProcessing() {
 		    
 	// --------------------
 
-	// Prints original image to canvas, without parallel processing result
-	// await module1.create_a_solid_image(ctx);
-	// OR
+	// Prints original image to canvas, without parallel processing result.
 	await create_a_solid_image(ctx);
 
 	// --------------------
 
 	// Obtain canvas data as an array
-	// const normalArray = await module2.convert_canvas_into_ImageData(ctx);
-	// OR
 	const normalArray = await convert_canvas_into_ImageData(ctx);
 
 	// Output normalArray as a string, to pass it to main.js
