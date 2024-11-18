@@ -1,10 +1,10 @@
-// export {create_dynamic_canvasElement, convert_canvas_into_ImageData, convert_canvas_into_ImageData, modify_canvas_data}
+export {create_dynamic_canvasElement, convert_canvas_into_ImageData, convert_canvas_into_ImageData, modify_canvas_data}
 
 
 // -------------------------------------------------
 // IMAGE SUBFUNCTIONS
 // -------------------------------------------------
-export async function create_dynamic_canvasElement(canvasElement_id, canvasElement_className) {
+async function create_dynamic_canvasElement(canvasElement_id, canvasElement_className) {
 	
 	const index = 0;
   
@@ -32,7 +32,7 @@ export async function create_dynamic_canvasElement(canvasElement_id, canvasEleme
 
 // -------------------------------------------------
 	
-export async function create_a_solid_image(ctx) {
+async function create_a_solid_image(ctx) {
 	
 	var r = Math.floor(Math.random()*255);
 	var g = Math.floor(Math.random()*255);
@@ -55,7 +55,7 @@ export async function create_a_solid_image(ctx) {
 
 // -------------------------------------------------
 
-export async function convert_canvas_into_ImageData(ctx) {
+async function convert_canvas_into_ImageData(ctx) {
 	
 	// Get canvas image
 	const uint8ClampedArray = await ctx.getImageData(0, 0, width, height); // TypedArray  Uint8ClampedArray
@@ -67,7 +67,7 @@ export async function convert_canvas_into_ImageData(ctx) {
 
 // -------------------------------------------------
 
-export async function modify_canvas_data(normalArray) {
+async function modify_canvas_data(normalArray) {
 
 	// Modify some of the pixels, to determine if there is a change
 	const color_name = ['r', 'g', 'b', 'alpha'];
