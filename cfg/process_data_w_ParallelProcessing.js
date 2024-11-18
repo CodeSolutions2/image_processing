@@ -3,9 +3,9 @@
 self.onmessage = function(event) {
 // onmessage = function(event) {
 
-	console.log("parallel_processing.js - event.data.type: ", event.data.type);
-	console.log("parallel_processing.js - event.data.data: ", event.data.data);
-	console.log("parallel_processing.js - event: ", event);
+	console.log("process_data_w_ParallelProcessing.js - event.data.type: ", event.data.type);
+	console.log("process_data_w_ParallelProcessing.js - event.data.data: ", event.data.data);
+	console.log("process_data_w_ParallelProcessing.js - event: ", event);
 
 	
 	function modify_canvas_data(normalArray) {
@@ -27,7 +27,7 @@ self.onmessage = function(event) {
 	if (event.data.type == 'process') {
 		// Modify the canvas image data 
 		const Typedarray = modify_canvas_data(event.data.data);
-		console.log('parallel_processing.js - Typedarray: ', Typedarray);
+		console.log('process_data_w_ParallelProcessing.js - Typedarray: ', Typedarray);
 
 		// Send processed data back to main thread
 		self.postMessage(Typedarray);
