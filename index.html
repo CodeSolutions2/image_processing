@@ -34,14 +34,14 @@ canvas {border: 1px solid black; position: absolute; display: inline-block; z-in
 
 <!-- ---------------------------------------- -->
 
-<!-- Way 0: WORKS! -->
-<script type="text/javascript" src="dist/image_processing_functions.js"></script>
+<!-- Way 0: -->
+<script type="text/javascript" src="./dist/image_processing_functions.js"></script>
 
-<!-- Way 1a: WORKS! -->
-<!-- <script type="module"> -->
-<!-- import { create_dynamic_canvasElement } from "./dist/image_processing_functions.js"; -->
-<!-- module0.create_dynamic_canvasElement = create_dynamic_canvasElement; -->
-<!-- </script> -->
+<!-- Way 1a:
+<script type="module">
+import { create_dynamic_canvasElement } from "./dist/image_processing_functions.js";
+module0.create_dynamic_canvasElement = create_dynamic_canvasElement;
+</script> -->
 	
 <script src="./cfg/process_data_w_ParallelProcessing.js" type="text/javascript"></script>
 
@@ -49,7 +49,7 @@ canvas {border: 1px solid black; position: absolute; display: inline-block; z-in
   
 <script>
 
-// const module0 = {};
+const module0 = {};
 	
 // -------------------------------------------------
 
