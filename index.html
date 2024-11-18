@@ -10,7 +10,13 @@ A compilation of image processing functions that are useful in MLOPS/Front-end d
 	<li>Select an image processing method from the dropdown list.</li>
   	<li>Push run_selection to view the result. </li>
 </ol>
-  
+
+<!-- ---------------------------------------- -->
+	
+<table style='text-align: left; width: 300px; display:block'>
+<tr>   
+<th id="inputs">
+	
 <label for="select_dropdown_option_label">Select an image processing example:</label>
 <select name="dropdown_options" id="dropdown_options" style="display:block">
   <option value="---">Select an option</option>
@@ -19,17 +25,30 @@ A compilation of image processing functions that are useful in MLOPS/Front-end d
 </select>
 
 <button id="run_selection" onclick="run_selection()" style="display:block;">run_selection</button>
+	
+</th>
 
 <!-- ---------------------------------------- -->
 
+<th id="outputs">
+	
 <div id="data_display" style="display:block; text-align: left; width: 600px;"></div>
-
 <div class="obj_className" id="obj_div"></div>
+	
+</th>
+	
+<!-- ---------------------------------------- -->
+	
+</tr>
+</table>
+
 
 <!-- ---------------------------------------- -->
 	
 <style>
 canvas {border: 1px solid black; position: absolute; display: inline-block; z-index: 0; top: 175px;}
+
+.obj_className {display:block; }
 </style>
 	
 <script src="./cfg/process_data_w_ParallelProcessing.js" type="text/javascript"></script>
@@ -70,10 +89,10 @@ async function run_selection() {
 		await draw_image_w_NoParallelProcessing();
     
 	} else if (dropdown_option_type == 'process_data_w_ParallelProcessing') {
-		document.getElementById('notification').innerHTML = "In progress.";
+		await process_data_w_ParallelProcessing();
 		
 	} else {
-		document.getElementById('notification').innerHTML = "Please select a drop down option type."; 
+		console.log("Please select a drop down option type."); 
 	}
 
 }
