@@ -3,11 +3,12 @@
 <head></head>
 <body>
 
-<h1>Image processing library</h1>
-  
+<h1>Image processing function library</h1>
+A compilation of image processing functions that are useful in front-end developement.
+	
 <ol type="A">
-	<li></li>
-  	<li></li>
+	<li>Select an image processing method from the dropdown list.</li>
+  	<li>Push run_selection to view the result. </li>
 </ol>
   
 <label for="select_dropdown_option_label">Select an image processing example:</label>
@@ -37,10 +38,10 @@ canvas {border: 1px solid black; position: absolute; display: inline-block; z-in
 <script type="text/javascript" src="dist/image_processing_functions.js"></script>
 
 <!-- Way 1a: WORKS! -->
-<script type="module">
-import { create_dynamic_canvasElement } from "./dist/image_processing_functions.js";
-module0.create_dynamic_canvasElement = create_dynamic_canvasElement;
-</script>
+<!-- <script type="module"> -->
+<!-- import { create_dynamic_canvasElement } from "./dist/image_processing_functions.js"; -->
+<!-- module0.create_dynamic_canvasElement = create_dynamic_canvasElement; -->
+<!-- </script> -->
 	
 <script src="./cfg/process_data_w_ParallelProcessing.js" type="text/javascript"></script>
 
@@ -48,6 +49,8 @@ module0.create_dynamic_canvasElement = create_dynamic_canvasElement;
   
 <script>
 
+// const module0 = {};
+	
 // -------------------------------------------------
 
 var width = 256;
@@ -135,7 +138,7 @@ async function process_data_w_ParallelProcessing() {
 
 	// Call main.js
 	const mainScript = document.createElement('script');
-	mainScript.src = 'process_data_w_ParallelProcessing_main.js';
+	mainScript.src = './cfg/process_data_w_ParallelProcessing_main.js';
 	document.body.appendChild(mainScript);
 	
 	// --------------------
