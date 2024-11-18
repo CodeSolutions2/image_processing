@@ -49,6 +49,15 @@ module0.create_dynamic_canvasElement = create_dynamic_canvasElement;
   
 <script>
 
+// -------------------------------------------------
+
+window.addEventListener('beforeunload', function() {
+	window.location.href = window.location.href + '?nocache=' + new Date().getTime();
+	document.getElementById("dropdown_options").selectedIndex = 0;
+});
+
+// -------------------------------------------------
+	
 const module0 = {};
 	
 // -------------------------------------------------
