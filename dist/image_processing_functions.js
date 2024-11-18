@@ -1,4 +1,4 @@
-export {create_dynamic_canvasElement, convert_canvas_into_ImageData, convert_canvas_into_ImageData, modify_canvas_data}
+export {create_dynamic_canvasElement, create_a_solid_image, convert_canvas_into_ImageData, modify_canvas_data}
 
 
 // -------------------------------------------------
