@@ -35,16 +35,16 @@ canvas {border: 1px solid black; position: absolute; display: inline-block; z-in
 <!-- ---------------------------------------- -->
 
 <!-- Way 0: -->
-<!-- <script type="text/javascript" src="./dist/image_processing_functions.js"></script> -->
+<script src="./dist/image_processing_functions.js" type="text/javascript"></script>
 
-<!-- Way 1a: -->
+<!-- Way 1a:
 <script type="module">
 import { create_dynamic_canvasElement, create_a_solid_image, convert_canvas_into_ImageData, modify_canvas_data } from "./dist/image_processing_functions.js";
 module0.create_dynamic_canvasElement = create_dynamic_canvasElement;
 module1.create_a_solid_image = create_a_solid_image;
 module2.convert_canvas_into_ImageData = convert_canvas_into_ImageData;
 module3.modify_canvas_data = modify_canvas_data;
-</script>
+</script> -->
 	
 <script src="./cfg/process_data_w_ParallelProcessing.js" type="text/javascript"></script>
 
@@ -61,10 +61,10 @@ window.addEventListener('beforeunload', function() {
 
 // -------------------------------------------------
 	
-const module0 = {};
-const module1 = {};
-const module2 = {};
-const module3 = {};
+// const module0 = {};
+// const module1 = {};
+// const module2 = {};
+// const module3 = {};
 	
 // -------------------------------------------------
 
@@ -76,18 +76,19 @@ var height = 256;
 
 
 async function run_selection() {
-
-  // Put in a function in <script>
-  var dropdown_option_type = document.getElementById("dropdown_options").value;
+	
+	// Put in a function in <script>
+	var dropdown_option_type = document.getElementById("dropdown_options").value;
   
-  if (dropdown_option_type == 'draw_image_w_NoParallelProcessing') {
-    await draw_image_w_NoParallelProcessing();
+	if (dropdown_option_type == 'draw_image_w_NoParallelProcessing') {
+		await draw_image_w_NoParallelProcessing();
     
-  } else if (dropdown_option_type == 'process_data_w_ParallelProcessing') {
-    document.getElementById('notification').innerHTML = "In progress.";
-  } else {
-  	document.getElementById('notification').innerHTML = "Please select a drop down option type."; 
-  }
+	} else if (dropdown_option_type == 'process_data_w_ParallelProcessing') {
+		document.getElementById('notification').innerHTML = "In progress.";
+		
+	} else {
+		document.getElementById('notification').innerHTML = "Please select a drop down option type."; 
+	}
 
 }
 
@@ -100,23 +101,30 @@ async function draw_image_w_NoParallelProcessing() {
 	// --------------------
 	
 	// Canvas to obtain data from.
-	const [ctx, canvasElement] = await module0.create_dynamic_canvasElement('canvasId', 'canvasElement_className');
+	// const [ctx, canvasElement] = await module0.create_dynamic_canvasElement('canvasId', 'canvasElement_className');
+	// OR
+	const [ctx, canvasElement] = await create_dynamic_canvasElement('canvasId', 'canvasElement_className');
 
 	// Add the canvas to the DOM
 	document.getElementById('data_display').appendChild(canvasElement);
 	
 	// --------------------
 	
-	await module1.create_a_solid_image(ctx);
+	// await module1.create_a_solid_image(ctx);
+	// OR
+	await create_a_solid_image(ctx);
 
 	// --------------------
 
 	// Obtain canvas data as an array
-	const normalArray = await module2.convert_canvas_into_ImageData(ctx);
+	// const normalArray = await module2.convert_canvas_into_ImageData(ctx);
+	// OR
+	const normalArray = await convert_canvas_into_ImageData(ctx);
 
 	// Modify the canvas image data 
-	const Typedarray = await module3.modify_canvas_data(normalArray);
-	console.log('Typedarray: ', Typedarray);
+	// const Typedarray = await module3.modify_canvas_data(normalArray);
+	// OR
+	const Typedarray = await modify_canvas_data(normalArray);
 
 	// --------------------
 
@@ -130,7 +138,9 @@ async function draw_image_w_NoParallelProcessing() {
 async function process_data_w_ParallelProcessing() {
 
 	// Canvas to obtain data from.
-	const [ctx, canvasElement] = await module0.create_dynamic_canvasElement('canvasId', 'canvasElement_className');
+	// const [ctx, canvasElement] = await module0.create_dynamic_canvasElement('canvasId', 'canvasElement_className');
+	// OR
+	const [ctx, canvasElement] = await create_dynamic_canvasElement('canvasId', 'canvasElement_className');
 
 	// Add the canvas to the DOM
 	document.getElementById('data_display').appendChild(canvasElement);
@@ -138,13 +148,16 @@ async function process_data_w_ParallelProcessing() {
 	// --------------------
 
 	// Prints original image to canvas, without parallel processing result
-	await module1.create_a_solid_image(ctx);
+	// await module1.create_a_solid_image(ctx);
+	// OR
+	await create_a_solid_image(ctx);
 
 	// --------------------
 
 	// Obtain canvas data as an array
-	const normalArray = await module2.convert_canvas_into_ImageData(ctx);
-	console.log("index.html - normalArray: ", normalArray);
+	// const normalArray = await module2.convert_canvas_into_ImageData(ctx);
+	// OR
+	const normalArray = await convert_canvas_into_ImageData(ctx);
 
 	// Output normalArray as a string, to pass it to main.js
 	document.getElementById("obj_div").innerHTML = JSON.stringify({ data: normalArray, type: 'process'});
