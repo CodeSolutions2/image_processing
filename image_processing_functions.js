@@ -4,18 +4,18 @@ export {create_dynamic_canvasElement, convert_canvas_into_ImageData, convert_can
 // -------------------------------------------------
 // IMAGE SUBFUNCTIONS
 // -------------------------------------------------
-async function create_dynamic_canvasElement(canvasElement_id) {
-
-  	const index = 0;
+async function create_dynamic_canvasElement(canvasElement_id, canvasElement_className) {
+	
+	const index = 0;
   
 	// Create a canvas element
-		var canvasElement = document.createElement('canvas');
+	var canvasElement = document.createElement('canvas');
 
-  // Set attributes of the canvas
-		canvasElement.width = width;
-		canvasElement.height = height;
+	// Set attributes of the canvas
+	canvasElement.width = width;
+	canvasElement.height = height;
   	canvasElement.id = canvasElement_id;
-	
+	canvasElement.class = canvasElement_className;
 	
 	// Get the 2D rendering context of the canvas
 	var ctx = canvasElement.getContext("2d");
