@@ -7,7 +7,7 @@ const canvasElement = document.querySelector('.canvasElement_className');
 if (window.Worker) {
 	
 	// [0] Define parallel processing variable
-	const parallel_processing = new Worker('process_data_w_ParallelProcessing.js');
+	const parallel_processing = new Worker('./cfg/process_data_w_ParallelProcessing.js');
 
 	// --------------------
 
