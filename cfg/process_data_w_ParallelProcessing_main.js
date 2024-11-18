@@ -13,7 +13,7 @@ if (window.Worker) {
 
 	// [1] Get data from index.html - SEND data to process_data_w_ParallelProcessing.js
 	const obj_div = JSON.parse(obj_div_str.textContent); // null, this is why event.data is null too
-	console.log("main.js - obj_div: ", obj_div);
+	// console.log("main.js - obj_div: ", obj_div);
 	
 	parallel_processing.postMessage(obj_div);
 
@@ -33,23 +33,33 @@ if (window.Worker) {
 		// [3] RECEIVE data from process_data_w_ParallelProcessing.js
 		console.log("main.js - addEventListener parallel_processing message");
 	  
-		console.log("main.js - processed_data - event.data: ", event.data);
+		// console.log("main.js - processed_data - event.data: ", event.data);
 	
 		// Draw parallel processed data on canvas
 		const imageData = new ImageData(event.data, canvasElement.width, canvasElement.height);
 		canvasElement.getContext("2d").putImageData(imageData, 0, 0);
 	  
-		console.log("main.js - event: ", event);
+		// console.log("main.js - event: ", event);
+
+		// Remove from thread
+		parallel_processing.terminate();
+		
 	}
 	
 	function process_messageerror(event) {
 		console.log("main.js - addEventListener parallel_processing messageerror");
-		console.log("main.js - event: ", event);
+		// console.log("main.js - event: ", event);
+
+		// Remove from thread
+		parallel_processing.terminate();
 	}
 	
 	function process_error(event) {
 		console.log("main.js - addEventListener parallel_processing error");
-		console.log("main.js - event: ", event);
+		// console.log("main.js - event: ", event);
+
+		// Remove from thread
+		parallel_processing.terminate();
 	}
 	
 	// --------------------
@@ -57,7 +67,3 @@ if (window.Worker) {
 } else {
 	console.log('main.js - The browser does not support the JavaScript function Worker.');
 }
-
-
-
-
