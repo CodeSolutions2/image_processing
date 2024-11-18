@@ -22,6 +22,7 @@ A compilation of image processing functions that are useful in MLOPS/Front-end d
   <option value="---">Select an option</option>
   <option value="draw_image_w_NoParallelProcessing">draw_image_w_NoParallelProcessing</option>
   <option value="process_data_w_ParallelProcessing">process_data_w_ParallelProcessing</option>
+  <option value="output_base64str_of_canvas">output_base64str_of_canvas</option>
 </select>
 
 <button id="run_selection" onclick="run_selection()" style="display:block;">run_selection</button>
@@ -97,6 +98,9 @@ async function run_selection() {
     
 	} else if (dropdown_option_type == 'process_data_w_ParallelProcessing') {
 		await process_data_w_ParallelProcessing();
+		
+	} else if (dropdown_option_type == 'output_base64str_of_canvas') {
+		await output_base64str_of_canvas();
 		
 	} else {
 		console.log("Please select a drop down option type."); 
@@ -184,7 +188,34 @@ async function process_data_w_ParallelProcessing() {
 	
 // -------------------------------------------------
 
+async function output_base64str_of_canvas() {
 
+	// Canvas to obtain data from.
+	const [ctx, canvasElement] = await create_dynamic_canvasElement('canvasId', 'canvasElement_className');
+
+	// Add the canvas to the DOM
+	document.getElementById('data_display').appendChild(canvasElement);
+	document.getElementById('canvasId').style.border = '1px solid black';
+
+	// --------------------
+	
+	// await module1.create_a_solid_image(ctx);
+	// OR
+	await create_a_solid_image(ctx);
+
+	// --------------------
+	
+	const [ASCII_str, base64_string] = await convert_canvas_to_base64str(ctx, canvasElement);
+
+	// --------------------
+	
+	document.getElementById("obj_div").style.display = 'block';
+	document.getElementById("obj_div").innerHTML = base64_string;
+
+	// --------------------
+		
+}
+	
 // -------------------------------------------------
 
 	
@@ -275,6 +306,37 @@ async function modify_canvas_data(normalArray) {
 	}
 
 	return await new Uint8ClampedArray(normalArray);
+}
+
+// -------------------------------------------------
+
+async function convert_canvas_to_base64str(ctx, canvasElement) {
+	
+	// -----------------------------
+	
+	// Get canvas image
+	const uint8ClampedArray = await ctx.getImageData(0, 0, canvasElement.width, canvasElement.height); // TypedArray  Uint8ClampedArray
+	// console.log('uint8ClampedArray: ', uint8ClampedArray);
+
+	// Convert TypedArray to normalArray
+	const normalArray = await Array.from(uint8ClampedArray.data);
+	// console.log('normalArray: ', normalArray);
+	
+	// Convert [normalArray of bytes] to text_characters
+	var ASCII_stringArray = normalArray.map((val) => { return String.fromCharCode(val); });
+	// console.log('ASCII_stringArray: ', ASCII_stringArray);
+	
+	// Join all the ASCII characters to form a string
+	var ASCII_str = ASCII_stringArray.join('');
+	// console.log("ASCII_str: ", ASCII_str);
+	
+	// Transform ASCII string into a base64 string
+	var base64_string = btoa(ASCII_str);
+	// console.log("base64_string: ", base64_string);
+
+	// -----------------------------
+
+	return [ASCII_str, base64_string];
 }
 	
 // -------------------------------------------------
