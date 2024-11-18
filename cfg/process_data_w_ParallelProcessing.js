@@ -1,7 +1,7 @@
 // process_data_w_ParallelProcessing.js
 // self refers to the global object in the browser
-self.onmessage = function(event) {
-// onmessage = function(event) {
+// self.onmessage = function(event) {
+onmessage = function(event) {
 
 	// console.log("process_data_w_ParallelProcessing.js - event.data.type: ", event.data.type);  	// process
 	// console.log("process_data_w_ParallelProcessing.js - event.data.data: ", event.data.data);	// Array(262144) [ 64, 190, 83, 138, 64, 190, 83, 138, 64, 190,  ]
