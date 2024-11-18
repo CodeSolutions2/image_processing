@@ -110,6 +110,8 @@ async function draw_image_w_NoParallelProcessing() {
 
 	// Non-parallel processing way
 
+	console.time('draw_image_w_NoParallelProcessing');
+	
 	// --------------------
 	
 	// Canvas to obtain data from.
@@ -137,12 +139,16 @@ async function draw_image_w_NoParallelProcessing() {
 	// Put imageData on second canvas.
 	const imageData = await new ImageData(Typedarray, canvasElement.width, canvasElement.height);
 	await ctx.putImageData(imageData, 0, 0);
+
+	console.timeEnd('draw_image_w_NoParallelProcessing');
 }
 
 // -------------------------------------------------
 
 async function process_data_w_ParallelProcessing() {
 
+	console.time('process_data_w_ParallelProcessing');
+	
 	// Canvas to obtain data from.
 	const [ctx, canvasElement] = await create_dynamic_canvasElement('canvasId', 'canvasElement_className');
 
@@ -170,6 +176,8 @@ async function process_data_w_ParallelProcessing() {
 	document.body.appendChild(mainScript);
 	
 	// --------------------
+	
+	console.timeEnd('process_data_w_ParallelProcessing');
 
 }
 	
