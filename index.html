@@ -33,6 +33,7 @@ A compilation of image processing functions that are useful in MLOPS/Front-end d
 <th id="outputs">
 	
 <div id="data_display" style="display:block; text-align: left; width: 600px;"></div>
+<canvas class="canvasElement_className" id="canvasElement_id" width="256" height="256" style="display:block"></canvas>
 <div class="obj_className" id="obj_div"></div>
 	
 </th>
@@ -150,10 +151,14 @@ async function process_data_w_ParallelProcessing() {
 	console.time('process_data_w_ParallelProcessing');
 	
 	// Canvas to obtain data from.
-	const [ctx, canvasElement] = await create_dynamic_canvasElement('canvasId', 'canvasElement_className');
-
-	// Add the canvas to the DOM
-	document.getElementById('data_display').appendChild(canvasElement);
+	// const [ctx, canvasElement] = await create_dynamic_canvasElement('canvasId', 'canvasElement_className');
+	// document.getElementById('data_display').appendChild(canvasElement);
+	
+	// OR
+	
+	// Use HTML element
+	var canvasElement = document.getElementById('canvasElement_id');
+	var ctx = canvasElement.getContext("2d");
 		    
 	// --------------------
 
