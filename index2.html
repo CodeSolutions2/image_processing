@@ -236,7 +236,12 @@ async function image_retrieval_fetch_w_ParallelProcessing() {
 	// --------------------
 
 	// Obtain desired url
-	var url = document.getElementById("text_input").value != undefined ? document.getElementById("text_input").value : "https://storage.googleapis.com/on-the-way2selfrespect/yellow.png";
+	if (document.getElementById("text_input").value.length > 0) {
+		var url = document.getElementById("text_input").value;
+	} else {
+		var url = "https://storage.googleapis.com/on-the-way2selfrespect/yellow.png";
+	}
+	// var url = document.getElementById("text_input").value.length > 0 ? document.getElementById("text_input").value : "https://storage.googleapis.com/on-the-way2selfrespect/yellow.png";
 	
 	// --------------------
 
