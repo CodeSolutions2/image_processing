@@ -208,8 +208,7 @@ async function image_data_manipulation_color_w_ParallelProcessing() {
 	
 	// Output data to main.js
 	const file_name = "image_data_manipulation_color.js";
-	const payload = {data: normalArray, type: 'process'};
-	document.getElementById("obj_div").innerHTML = JSON.stringify({ file_name: file_name, payload: payload});
+	document.getElementById("obj_div").innerHTML = `file_name|${file_name}|data|${normalArray}|type|process`;
 
 	// --------------------
 
@@ -244,11 +243,10 @@ async function image_retrieval_fetch_w_ParallelProcessing() {
 	var url = document.getElementById("text_input").value != undefined ? document.getElementById("text_input").value : "https://storage.googleapis.com/on-the-way2selfrespect/yellow.png";
 	
 	// --------------------
-	
+
 	// Output data to main.js
 	const file_name = "retrieve_image.js";
-	const payload = {data: url, type: 'process'};
-	document.getElementById("obj_div").innerHTML = JSON.stringify({ file_name: file_name, payload: payload});
+	document.getElementById("obj_div").innerHTML = `file_name|${file_name}|data|${url}|type|process`;
 
 	// --------------------
 
