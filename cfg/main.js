@@ -25,7 +25,9 @@ if (window.Worker) {
 
 	// [2] Send process to parallel_processing.js
 
-	const obj_payload = eval(out.at(3));
+	const data = eval(out.at(3)); // array or string
+	const type = out.at(5);  // string
+	const obj_payload = {data: data, type: type};
 	console.log("obj_payload: ", obj_payload);
 	
 	parallel_processing.postMessage(obj_payload);
