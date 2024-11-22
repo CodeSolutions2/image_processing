@@ -20,6 +20,14 @@
   
 <script>
 
+// -------------------------------------------------
+
+window.addEventListener('beforeunload', function() {
+	window.location.href = window.location.href + '?nocache=' + new Date().getTime();
+});
+
+// -------------------------------------------------
+	
 var width = 256;
 var height = 256;
 
