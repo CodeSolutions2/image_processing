@@ -40,8 +40,15 @@ console.time('draw_image_w_ParallelProcessing');
 	// Obtain canvas data as an array
 	const normalArray = await convert_canvas_into_ImageData(ctx);
 
+	// --------------------
+
+	// Modify the canvas image data 
+	const Typedarray = await modify_canvas_data(normalArray);
+
+	// --------------------
+	
 	// Output normalArray as a string, to pass it to main.js
-	document.getElementById("obj_div").innerHTML = JSON.stringify({ data: normalArray, type: 'process'});
+	document.getElementById("obj_div").innerHTML = JSON.stringify({ data: Typedarray, type: 'process'});
 
 	// --------------------
 
