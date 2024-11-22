@@ -4,7 +4,7 @@
 <body>
 
 
-<button id="draw_image_w_ParallelProcessing" onclick="draw_image_w_ParallelProcessing()">draw_image_w_ParallelProcessing</button>
+<button id="run_selection" onclick="run_selection()">run_selection</button>
 
 
 <div id="data_display" style="display:block; text-align: left; width: 600px;"></div>
@@ -14,7 +14,7 @@
 
 <!-- ---------------------------------------- -->
 	
-<script src="./cfg/draw_image_w_ParallelProcessing_main.js" type="text/javascript"></script>
+<script src="./cfg/main.js" type="text/javascript"></script>
 
 <!-- ---------------------------------------- -->
   
@@ -33,9 +33,9 @@ var height = 256;
 
 // -----------------------------------------------
   
-async function draw_image_w_ParallelProcessing() {
+async function run_selection() {
 
-console.time('draw_image_w_ParallelProcessing');
+console.time('run_selection');
 	
 	// Canvas to obtain data from.
 	// Only HTML elements function.
@@ -60,19 +60,21 @@ console.time('draw_image_w_ParallelProcessing');
 
 	// --------------------
 	
-	// Output normalArray as a string, to pass it to main.js
-	document.getElementById("obj_div").innerHTML = JSON.stringify({ data: Typedarray, type: 'process', width: width, height: height});
+	// Output data to main.js
+	const file_name = "retrieve_image.js";
+	const payload = {data: Typedarray, type: 'process'};
+	document.getElementById("obj_div").innerHTML = JSON.stringify({ file_name: file_name, payload: payload});
 
 	// --------------------
 
 	// Call main.js
 	const mainScript = document.createElement('script');
-	mainScript.src = './cfg/draw_image_w_ParallelProcessing_main.js';
+	mainScript.src = './cfg/main.js';
 	document.body.appendChild(mainScript);
 	
 	// --------------------
 	
-	console.timeEnd('draw_image_w_ParallelProcessing');
+	console.timeEnd('run_selection');
 
 }
 
