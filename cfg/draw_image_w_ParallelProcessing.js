@@ -1,5 +1,8 @@
 // draw_image_w_ParallelProcessing.js
 
+const canvasElement = document.querySelector('.canvasElement_className');
+
+
 // self refers to the global object in the browser
 self.onmessage = function(event) {
 
