@@ -12,11 +12,13 @@ if (window.Worker) {
 	// --------------------
 
 	// [2] Get data from index.html - SEND data to draw_image_w_ParallelProcessing.js
+
+	console.log("main.js - obj_div_str.textContent: ", obj_div_str.textContent);
 	
-	const obj_div = JSON.parse(obj_div_str.textContent);
-	console.log("main.js - obj_div: ", obj_div);
+	// const obj_div = JSON.parse(obj_div_str.textContent);
+	// console.log("main.js - obj_div: ", obj_div);
 	
-	parallel_processing.postMessage(obj_div);
+	// parallel_processing.postMessage(obj_div);
 
 	// --------------------
 
