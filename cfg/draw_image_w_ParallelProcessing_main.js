@@ -29,13 +29,10 @@ if (window.Worker) {
 	function process_message(event) {
 		
 		// [3] RECEIVE data from draw_image_w_ParallelProcessing.js
-		console.log("main.js - addEventListener parallel_processing message");
-	  
-		// console.log("main.js - processed_data - event.data: ", event.data);
-	
-    console.log("main.js - DONE");
-    
-		// console.log("main.js - event: ", event);
+		console.log("main.js - addEventListener process_message - response from parallel_processing");
+
+		console.log("event: ", event);
+		console.log("event.data: ", event.data);
 
 		// Remove from thread
 		parallel_processing.terminate();
@@ -43,16 +40,20 @@ if (window.Worker) {
 	}
 	
 	function process_messageerror(event) {
-		console.log("main.js - addEventListener parallel_processing messageerror");
-		// console.log("main.js - event: ", event);
+		
+		console.log("main.js - addEventListener process_messageerror - response from parallel_processing");
+		
+		console.log("event: ", event);
 
 		// Remove from thread
 		parallel_processing.terminate();
 	}
 	
 	function process_error(event) {
-		console.log("main.js - addEventListener parallel_processing error");
-		// console.log("main.js - event: ", event);
+		
+		console.log("main.js - addEventListener process_error - response from parallel_processing");
+		
+		console.log("event: ", event);
 
 		// Remove from thread
 		parallel_processing.terminate();
