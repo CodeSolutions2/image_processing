@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head></head>
+<body>
+
+
+<button id="draw_image_w_ParallelProcessing" onclick="draw_image_w_ParallelProcessing()">draw_image_w_ParallelProcessing</button>
+
+
+
+
+
+
+<script>
+
+// -----------------------------------------------
+  
+async function draw_image_w_ParallelProcessing() {
+
+console.time('draw_image_w_ParallelProcessing');
+	
+	// Canvas to obtain data from.
+	// Only HTML elements function.
+	var canvasElement = document.getElementById('canvasElement_id');
+	document.getElementById('canvasElement_id').style.border = '1px solid black';
+	var ctx = canvasElement.getContext("2d");
+		    
+	// --------------------
+
+	// Prints original image to canvas, without parallel processing result.
+	await create_a_solid_image(ctx);
+
+	// --------------------
+
+	// Obtain canvas data as an array
+	const normalArray = await convert_canvas_into_ImageData(ctx);
+
+	// Output normalArray as a string, to pass it to main.js
+	document.getElementById("obj_div").innerHTML = JSON.stringify({ data: normalArray, type: 'process'});
+
+	// --------------------
+
+	// Call main.js
+	const mainScript = document.createElement('script');
+	mainScript.src = './cfg/draw_data_w_ParallelProcessing_main.js';
+	document.body.appendChild(mainScript);
+	
+	// --------------------
+	
+	console.timeEnd('draw_image_w_ParallelProcessing');
+
+}
+
+// -------------------------------------------------
+
+
+
+
+
+
+
+// -----------------------------------------------
+// SUBFUNCTIONS
+// -----------------------------------------------
+async function create_a_solid_image(ctx) {
+	
+	var r = Math.floor(Math.random()*255);
+	var g = Math.floor(Math.random()*255);
+  	var b = Math.floor(Math.random()*255);
+  	const alpha = Math.floor(Math.random()*100);
+  
+  	// ----------------------
+  
+  	// Make r, g, b and interesting color range.
+	// Make r from 1 to 255 if r>1, then output=r else output=1
+	r = r>0 ? r : 1;
+	g = g>0 ? g : 1;
+	b = b>0 ? b : 1;
+
+	// ----------------------
+	
+	ctx.fillStyle = `rgb(${r} ${g} ${b} / ${alpha}%)`;
+	ctx.fillRect(0, 0, width, height);
+}
+
+// -------------------------------------------------
+
+async function convert_canvas_into_ImageData(ctx) {
+	
+	// Get canvas image
+	const uint8ClampedArray = await ctx.getImageData(0, 0, width, height); // TypedArray  Uint8ClampedArray
+	// console.log('uint8ClampedArray: ', uint8ClampedArray);
+  
+	// Convert TypedArray to normalArray
+	return normalArray = await Array.from(uint8ClampedArray.data);
+}
+
+// -------------------------------------------------
+
+
+
+
+
+</script>
+</body>
+</html>
