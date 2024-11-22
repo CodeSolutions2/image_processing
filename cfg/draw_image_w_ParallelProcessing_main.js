@@ -4,7 +4,7 @@ const obj_div_str = document.querySelector('#obj_div');
 
 const canvasElement = document.querySelector('.canvasElement_className');
 
-const off_canvasElement = document.getElementById('canvasElement_id').transferToImageBitmap();
+const off_canvasElement = canvasElement.transferToImageBitmap();
 
 
 if (window.Worker) {
@@ -19,8 +19,8 @@ if (window.Worker) {
 	parallel_processing.postMessage(
 		{
 			canvas: off_canvasElement,
-			width: document.querySelector('.canvasElement_className').width,
-			height: document.querySelector('.canvasElement_className').height,
+			width: canvasElement.width,
+			height: canvasElement.height,
 		},
 		[off_canvasElement]
 	);
