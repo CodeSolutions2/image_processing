@@ -4,7 +4,7 @@ const obj_div_str = document.querySelector('#obj_div');
 
 const canvasElement = document.querySelector('.canvasElement_className');
 
-const off_canvasElement = canvasElement.transferToImageBitmap();
+// const off_canvasElement = canvasElement.transferToImageBitmap();
 
 
 if (window.Worker) {
@@ -16,14 +16,14 @@ if (window.Worker) {
 
 	// [1] Send off_canvasElement to parallel_processing
 	
-	parallel_processing.postMessage(
-		{
-			canvas: off_canvasElement,
-			width: canvasElement.width,
-			height: canvasElement.height,
-		},
-		[off_canvasElement]
-	);
+	// parallel_processing.postMessage(
+	// 	{
+	// 		canvas: off_canvasElement,
+	// 		width: canvasElement.width,
+	// 		height: canvasElement.height,
+	// 	},
+	// 	[off_canvasElement]
+	// );
 
 	// --------------------
 
