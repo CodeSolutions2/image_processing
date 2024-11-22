@@ -37,6 +37,7 @@ if (window.Worker) {
 
 		// console.log("event: ", event);
 		console.log("event.data: ", event.data);
+		canvasElement.getContext("2d").putImageData(event.data, 0, 0);
 
 		// Remove from thread
 		parallel_processing.terminate();
