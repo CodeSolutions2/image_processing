@@ -6,9 +6,9 @@ const canvasElement = document.querySelector('.canvasElement_className');
 // self refers to the global object in the browser
 self.onmessage = function(event) {
 
-	// console.log("draw_image_w_ParallelProcessing.js - event.data.type: ", event.data.type);  	// process
-	// console.log("draw_image_w_ParallelProcessing.js - event.data.data: ", event.data.data);	// Typedarray
-	// console.log("draw_image_w_ParallelProcessing.js - event: ", event);  	// [object MessageEvent]
+	console.log("draw_image_w_ParallelProcessing.js - event.data.type: ", event.data.type);  	// process
+	console.log("draw_image_w_ParallelProcessing.js - event.data.data: ", event.data.data);	// Typedarray
+	console.log("draw_image_w_ParallelProcessing.js - event: ", event);  	// [object MessageEvent]
 	
 	if (event.data.type == 'process') {
 		
