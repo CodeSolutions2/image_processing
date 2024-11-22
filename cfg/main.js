@@ -7,21 +7,27 @@ if (window.Worker) {
 
 	// [0] Get data from index.html 
 	
-	const obj_div = JSON.parse(obj_div_str.textContent);
-	// console.log("main.js - obj_div: ", obj_div);
+	const index_data = obj_div_str.textContent
+	// console.log("main.js - index_data: ", index_data);
 	
 	// --------------------
 
 	// [1] Define parallel processing variable parallel_processing
-
-	const file_name = obj_div.file_name;
+	var out = index_data.split('|');   	// `file_name|${file_name}|data|${normalArray}|type|process`
+	console.log("out: ", out);
+	
+	const file_name = out.at(1);
+	console.log("file_name: ", file_name);
+	
 	const parallel_processing = new Worker(`./cfg/${file_name}`);
 
 	// --------------------
 
 	// [2] Send process to parallel_processing.js
 
-	const obj_payload = obj_div.payload;
+	const obj_payload = eval(out.at(3));
+	console.log("obj_payload: ", obj_payload);
+	
 	parallel_processing.postMessage(obj_payload);
 	
 	// --------------------
