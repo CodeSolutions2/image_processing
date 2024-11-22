@@ -4,7 +4,7 @@ const obj_div_str = document.querySelector('#obj_div');
 
 const canvasElement = document.querySelector('.canvasElement_className');
 
-const off_canvasElement = document.querySelector('.canvasElement_className').transferToImageBitmap();
+const off_canvasElement = document.getElementById('canvasElement_id').transferToImageBitmap();
 
 
 if (window.Worker) {
