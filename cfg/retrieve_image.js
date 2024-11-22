@@ -6,7 +6,7 @@ self.onmessage = function(event) {
 	console.log("retrieve_image.js - event.data.data: ", event.data.data);	// Typedarray
 	console.log("retrieve_image.js - event: ", event);  	// [object MessageEvent]
 	
-	if (event.data.payload.type == 'process') {
+	if (event.data.type == 'process') {
 
 		// Determine request method
 		var headers = {
