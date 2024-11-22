@@ -26,6 +26,8 @@ A compilation of image processing functions that are useful in MLOPS/Front-end d
   <option value="output_base64str_of_canvas">output_base64str_of_canvas</option>
 </select>
 
+<input type="text" name="text_input" id="text_input" value="" style="display:none;">
+
 <button id="run_selection" onclick="run_selection()" style="display:block;">run_selection</button>
 	
 </th>
@@ -75,6 +77,29 @@ window.addEventListener('beforeunload', function() {
 
 // -------------------------------------------------
 	
+async function processEvent_dropdown_options(event) {
+
+	// there is nothing in event that tells which drop down was selected
+	// console.log('event: ', event);
+
+	const element = document.getElementById("dropdown_options");
+	
+	// console.log('element.selectedIndex: ', element.selectedIndex);
+	// OR
+	// console.log('element.options.selectedIndex: ', element.options.selectedIndex);
+	
+	if (document.getElementById("dropdown_options").selectedIndex == 3) {
+		document.getElementById("text_input").style.display = 'block';
+	} else {
+		document.getElementById("text_input").style.display = 'none';
+	}
+	
+}
+
+document.getElementById("dropdown_options").addEventListener("change", processEvent_dropdown_options, false);
+	
+// -------------------------------------------------
+	
 // const module0 = {};
 // const module1 = {};
 // const module2 = {};
@@ -84,7 +109,6 @@ window.addEventListener('beforeunload', function() {
 
 var width = 256;
 var height = 256;
-
 
 // -------------------------------------------------
 
@@ -216,19 +240,14 @@ async function image_retrieval_fetch_w_ParallelProcessing() {
 		    
 	// --------------------
 
-	// Prints original image to canvas, without parallel processing result.
-	await create_a_solid_image(ctx);
-
-	// --------------------
-
-	// Obtain canvas data as an array
-	const normalArray = await convert_canvas_into_ImageData(ctx);
-
+	// Obtain desired url
+	var url = document.getElementById("text_input").value != undefined ? document.getElementById("text_input").value : "https://storage.googleapis.com/on-the-way2selfrespect/yellow.png";
+	
 	// --------------------
 	
 	// Output data to main.js
 	const file_name = "retrieve_image.js";
-	const payload = {data: normalArray, type: 'process'};
+	const payload = {data: url, type: 'process'};
 	document.getElementById("obj_div").innerHTML = JSON.stringify({ file_name: file_name, payload: payload});
 
 	// --------------------
