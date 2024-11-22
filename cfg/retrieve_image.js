@@ -2,8 +2,8 @@
 
 // self refers to the global object in the browser
 self.onmessage = function(event) {
-	console.log("retrieve_image.js - event.data.type: ", event.data.payload.type);  	// process
-	console.log("retrieve_image.js - event.data.data: ", event.data.payload.data);	// Typedarray
+	console.log("retrieve_image.js - event.data.type: ", event.data.type);  	// process
+	console.log("retrieve_image.js - event.data.data: ", event.data.data);	// Typedarray
 	console.log("retrieve_image.js - event: ", event);  	// [object MessageEvent]
 	
 	if (event.data.payload.type == 'process') {
@@ -28,7 +28,7 @@ self.onmessage = function(event) {
 		};
 		
 		// Fetch data
-		const arraybuffer = fetch(event.data.payload.data, options)
+		const arraybuffer = fetch(event.data.data, options)
 				.then(response => response.arrayBuffer())
 				.then(async function(arraybuffer) { return arraybuffer; })
 				.catch(error => console.error("error: ", error));
