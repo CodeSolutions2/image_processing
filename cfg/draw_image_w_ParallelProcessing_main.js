@@ -2,8 +2,6 @@
 // Using a Worker in JavaScript requires a separate JavaScript file because Workers run in a separate thread and need to be loaded from an external file due to security restrictions.
 const obj_div_str = document.querySelector('#obj_div');
 
-const canvasElement = document.querySelector('.canvasElement_className');
-
 if (window.Worker) {
 	
 	// [0] Define parallel processing variable
