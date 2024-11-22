@@ -2,6 +2,11 @@
 // Using a Worker in JavaScript requires a separate JavaScript file because Workers run in a separate thread and need to be loaded from an external file due to security restrictions.
 const obj_div_str = document.querySelector('#obj_div');
 
+const canvasElement = document.querySelector('.canvasElement_className');
+
+const off_canvasElement = document.querySelector('.canvasElement_className').transferToImageBitmap();
+
+
 if (window.Worker) {
 	
 	// [0] Define parallel processing variable
@@ -9,7 +14,21 @@ if (window.Worker) {
 
 	// --------------------
 
-	// [1] Get data from index.html - SEND data to draw_image_w_ParallelProcessing.js
+	// [1] Send off_canvasElement to parallel_processing
+	
+	parallel_processing.postMessage(
+		{
+			canvas: off_canvasElement,
+			width: document.querySelector('.canvasElement_className').width,
+			height: document.querySelector('.canvasElement_className').height,
+		},
+		[off_canvasElement]
+	);
+
+	// --------------------
+
+	// [2] Get data from index.html - SEND data to draw_image_w_ParallelProcessing.js
+	
 	const obj_div = JSON.parse(obj_div_str.textContent);
 	console.log("main.js - obj_div: ", obj_div);
 	
@@ -17,7 +36,7 @@ if (window.Worker) {
 
 	// --------------------
 
-	// [2] WAIT for processed data from draw_image_w_ParallelProcessing.js
+	// [3] WAIT for processed data from draw_image_w_ParallelProcessing.js
 	
 	// Use eventListener
 	parallel_processing.addEventListener("message", process_message, false);
@@ -25,10 +44,11 @@ if (window.Worker) {
 	parallel_processing.addEventListener("error", process_error, false);
 
 	// --------------------
-
+	
+	// [4] RECEIVE data from draw_image_w_ParallelProcessing.js
+	
 	function process_message(event) {
 		
-		// [3] RECEIVE data from draw_image_w_ParallelProcessing.js
 		console.log("main.js - addEventListener process_message - response from parallel_processing");
 
 		// console.log("event: ", event);
