@@ -2,8 +2,8 @@
 // self refers to the global object in the browser
 self.onmessage = function(event) {
 
-	// console.log("image_data_manipulation_color.js - event.data.type: ", event.data.type);  	// process
-	// console.log("image_data_manipulation_color.js - event.data.data: ", event.data.data);	// Array(262144) [ 64, 190, 83, 138, 64, 190, 83, 138, 64, 190,  ]
+	// console.log("image_data_manipulation_color.js - event.data.payload.type: ", event.data.payload.type);  	// process
+	// console.log("image_data_manipulation_color.js - event.data.payload.data: ", event.data.payload.data);	// Array(262144) [ 64, 190, 83, 138, 64, 190, 83, 138, 64, 190,  ]
 	// console.log("image_data_manipulation_color.js - event: ", event);  	// [object MessageEvent]
 
 	
@@ -23,9 +23,9 @@ self.onmessage = function(event) {
 
 	
 	
-	if (event.data.type == 'process') {
+	if (event.data.payload.type == 'process') {
 		// Modify the canvas image data 
-		const Typedarray = modify_canvas_data(event.data.data);
+		const Typedarray = modify_canvas_data(event.data.payload.data);
 
 		// Send processed data back to main thread
 		self.postMessage(Typedarray);
