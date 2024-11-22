@@ -11,7 +11,7 @@ if (window.Worker) {
 
 	// [1] Get data from index.html - SEND data to draw_image_w_ParallelProcessing.js
 	const obj_div = JSON.parse(obj_div_str.textContent);
-	// console.log("main.js - obj_div: ", obj_div);
+	console.log("main.js - obj_div: ", obj_div);
 	
 	parallel_processing.postMessage(obj_div);
 
@@ -31,7 +31,7 @@ if (window.Worker) {
 		// [3] RECEIVE data from draw_image_w_ParallelProcessing.js
 		console.log("main.js - addEventListener process_message - response from parallel_processing");
 
-		console.log("event: ", event);
+		// console.log("event: ", event);
 		console.log("event.data: ", event.data);
 
 		// Remove from thread
@@ -43,7 +43,7 @@ if (window.Worker) {
 		
 		console.log("main.js - addEventListener process_messageerror - response from parallel_processing");
 		
-		console.log("event: ", event);
+		// console.log("event: ", event);
 
 		// Remove from thread
 		parallel_processing.terminate();
@@ -53,7 +53,7 @@ if (window.Worker) {
 		
 		console.log("main.js - addEventListener process_error - response from parallel_processing");
 		
-		console.log("event: ", event);
+		// console.log("event: ", event);
 
 		// Remove from thread
 		parallel_processing.terminate();
