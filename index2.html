@@ -238,9 +238,9 @@ async function image_retrieval_fetch_w_ParallelProcessing() {
 
 	// Obtain desired url
 	if (document.getElementById("text_input").value.length > 0) {
-		var url = document.getElementById("text_input").value;
+		var url = document.getElementById("text_input").value.toString();
 	} else {
-		var url = "https://storage.googleapis.com/on-the-way2selfrespect/yellow.png";
+		var url = "https://storage.googleapis.com/on-the-way2selfrespect/yellow.png".toString();
 	}
 	// var url = document.getElementById("text_input").value.length > 0 ? document.getElementById("text_input").value : "https://storage.googleapis.com/on-the-way2selfrespect/yellow.png";
 	
