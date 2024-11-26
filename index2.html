@@ -267,9 +267,9 @@ async function image_retrieval_fetch_w_ParallelProcessing() {
 	parallel_processing.postMessage({data: url, type: type});
 
 	// Call retrieve_image.js
-	const mainScript = document.createElement('script');
-	mainScript.src = './cfg/retrieve_image.js';
-	document.body.appendChild(mainScript);
+	const Script = document.createElement('script');
+	Script.src = './cfg/retrieve_image.js';
+	document.body.appendChild(Script);
 	
 	// Use eventListener
 	parallel_processing.addEventListener("message", process_message, false);
@@ -277,32 +277,25 @@ async function image_retrieval_fetch_w_ParallelProcessing() {
 	parallel_processing.addEventListener("error", process_error, false);
 	
 	function process_message(event) {
-		
-		console.log("main.js - addEventListener parallel_processing message");
-	  
 		console.log("process_message - event.data: ", event.data);
 	
 		// Draw parallel processed data on canvas - drawing can only be performed on the main thread
 		const imageData = new ImageData(event.data, canvasElement.width, canvasElement.height);
 		canvasElement.getContext("2d").putImageData(imageData, 0, 0);
-	  
-		// console.log("main.js - event: ", event);
 
 		// Remove from thread
 		parallel_processing.terminate();
 	}
 	
 	function process_messageerror(event) {
-		console.log("main.js - addEventListener parallel_processing messageerror");
-		// console.log("main.js - event: ", event);
+		console.log("process_messageerror - event.data: ", event.data);
 
 		// Remove from thread
 		parallel_processing.terminate();
 	}
 	
 	function process_error(event) {
-		console.log("main.js - addEventListener parallel_processing error");
-		// console.log("main.js - event: ", event);
+		console.log("process_error - event.data: ", event.data);
 
 		// Remove from thread
 		parallel_processing.terminate();
