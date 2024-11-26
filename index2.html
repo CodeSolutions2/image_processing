@@ -24,9 +24,12 @@ A compilation of image processing functions that are useful for development.
   <option value="image_data_color_change_w_ParallelProcessing">image_data_color_change_w_ParallelProcessing</option>
   <option value="image_retrieval_fetch_w_ParallelProcessing">image_retrieval_fetch_w_ParallelProcessing</option>
   <option value="output_base64str_of_canvas">output_base64str_of_canvas</option>
+  <option value="image_data_resize_w_NoParallelProcessing">image_data_resize_w_NoParallelProcessing</option>
 </select>
 
 <input type="text" name="text_input" id="text_input" value="" style="display:none;">
+<input type="text" name="new_width" id="new_width" value="" style="display:none;">
+<input type="text" name="new_height" id="new_height" value="" style="display:none;">
 
 <button id="run_selection" onclick="run_selection()" style="display:block;">run_selection</button>
 	
@@ -86,8 +89,15 @@ async function processEvent_dropdown_options(event) {
 	
 	if (document.getElementById("dropdown_options").selectedIndex == 3) {
 		document.getElementById("text_input").style.display = 'block';
-	} else {
-		document.getElementById("text_input").style.display = 'none';
+
+	else if (document.getElementById("dropdown_options").selectedIndex == 5) {
+		document.getElementById("new_width").style.display = 'block';
+		document.getElementById("new_height").style.display = 'block';
+		
+	// } else {
+	// 	document.getElementById("text_input").style.display = 'none';
+	//	document.getElementById("new_width").style.display = 'none';
+	//	document.getElementById("new_height").style.display = 'none';
 	}
 	
 }
@@ -125,6 +135,9 @@ async function run_selection() {
 		
 	} else if (dropdown_option_type == 'output_base64str_of_canvas') {
 		await output_base64str_of_canvas();
+
+	} else if (dropdown_option_type == 'image_data_resize_w_NoParallelProcessing') {
+		await image_data_resize_w_NoParallelProcessing();
 		
 	} else {
 		console.log("Please select a drop down option type."); 
@@ -177,6 +190,47 @@ async function image_data_color_change_w_NoParallelProcessing() {
 }
 
 // -------------------------------------------------
+
+async function image_data_resize_w_NoParallelProcessing() {
+
+	// Non-parallel processing way
+
+	console.time('image_data_resize_w_NoParallelProcessing');
+	
+	// --------------------
+	
+	// Canvas to obtain data from.
+	const [ctx, canvasElement] = await create_dynamic_canvasElement('canvasId', 'canvasElement_className');
+
+	// Add the canvas to the DOM
+	document.getElementById('data_display').appendChild(canvasElement);
+	document.getElementById('canvasId').style.border = '1px solid black';
+
+	// --------------------
+	
+	// await module1.create_a_solid_image(ctx);
+	// OR
+	await create_a_solid_image(ctx);
+
+	// --------------------
+
+	// Obtain canvas data as an array
+	const normalArray = await convert_canvas_into_ImageData(ctx);
+
+	// --------------------
+	
+	// Resize the canvas image data 
+	var new_width = document.getElementById("new_width").value;
+	var new_height = document.getElementById("new_height").value;
+	await display_image_data_with_specific_size(ctx, normalArray, new_width, new_height)
+
+	// --------------------
+	
+	console.timeEnd('image_data_resize_w_NoParallelProcessing');  // 40ms
+}
+
+// -------------------------------------------------
+
 
 async function image_data_color_change_w_ParallelProcessing() {
 
@@ -429,6 +483,17 @@ async function modify_canvas_data(normalArray) {
 	return await new Uint8ClampedArray(normalArray);
 }
 
+// -------------------------------------------------
+
+async function display_image_data_with_specific_size(ctx, normalArray, new_width, new_height) {
+
+	var Typedarray = await new Uint8ClampedArray(normalArray);
+	
+	// Put imageData on second canvas.
+	const imageData = await new ImageData(Typedarray, new_width, new_height);
+	await ctx.putImageData(imageData, 0, 0);
+}
+	
 // -------------------------------------------------
 
 async function convert_canvas_to_base64str(ctx, canvasElement) {
