@@ -19,20 +19,22 @@ if (window.Worker) {
 	console.log("file_name: ", file_name);
 	
 	const parallel_processing = new Worker(`./cfg/${file_name}`);
-
+	console.log("parallel_processing: ", parallel_processing);
+	
 	// --------------------
 
 	// [2] Send data to parallel_processing.js
 
 	// Convert string into an object
-	const data = eval(out.at(3)); // array or string
-	console.log("data: ", data);
+	// const data = eval(out.at(3)); // array or string
+	// console.log("data: ", data);
 	
-	const type = out.at(5);  // string
-	const obj_payload = {data: data, type: type};
-	console.log("obj_payload: ", obj_payload);
+	// const type = out.at(5);  // string
+	// const obj_payload = {data: data, type: type};
+	// console.log("obj_payload: ", obj_payload);
 	
-	parallel_processing.postMessage(obj_payload);
+	// parallel_processing.postMessage(obj_payload);
+	parallel_processing.postMessage("test");
 	
 	// --------------------
 
