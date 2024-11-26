@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head></head>
@@ -264,7 +263,7 @@ async function image_retrieval_fetch_w_ParallelProcessing() {
 	const parallel_processing = new Worker(`./cfg/${file_name}`);
 	console.log("parallel_processing: ", parallel_processing);
 
-	parallel_processing.postMessage({data: url, type: type});
+	parallel_processing.postMessage({data: url});
 
 	// Call retrieve_image.js
 	const Script = document.createElement('script');
