@@ -22,9 +22,12 @@ if (window.Worker) {
 
 	// --------------------
 
-	// [2] Send process to parallel_processing.js
+	// [2] Send data to parallel_processing.js
 
+	// Convert string into an object
 	const data = eval(out.at(3)); // array or string
+	console.log("data: ", data);
+	
 	const type = out.at(5);  // string
 	const obj_payload = {data: data, type: type};
 	console.log("obj_payload: ", obj_payload);
