@@ -236,27 +236,78 @@ async function image_retrieval_fetch_w_ParallelProcessing() {
 		    
 	// --------------------
 
-	// Obtain desired url
+	// Obtain data to send
+	
+	// [0] url
 	if (document.getElementById("text_input").value.length > 0) {
 		var url = document.getElementById("text_input").value.toString();
 	} else {
 		var url = "https://storage.googleapis.com/on-the-way2selfrespect/yellow.png".toString();
 	}
-	// var url = document.getElementById("text_input").value.length > 0 ? document.getElementById("text_input").value : "https://storage.googleapis.com/on-the-way2selfrespect/yellow.png";
+
+	// [1] parallel_processing name to call
+	const file_name = "retrieve_image.js"
 	
 	// --------------------
 
 	// Output data to main.js
-	const file_name = "retrieve_image.js";
-  const type_of_process = "process";
-	document.getElementById("obj_div").innerHTML = `file_name|${file_name}|data|${url}|type|${type_of_process}`;
-
-	// --------------------
+	// document.getElementById("obj_div").innerHTML = `file_name|${file_name}|data|${url}`;
 
 	// Call main.js
+	// const mainScript = document.createElement('script');
+	// mainScript.src = './cfg/main.js';
+	// document.body.appendChild(mainScript);
+	
+	// OR
+
+	// Define parallel processing variable directly in index.html
+	const parallel_processing = new Worker(`./cfg/${file_name}`);
+	console.log("parallel_processing: ", parallel_processing);
+
+	parallel_processing.postMessage({data: url, type: type});
+
+	// Call retrieve_image.js
 	const mainScript = document.createElement('script');
-	mainScript.src = './cfg/main.js';
+	mainScript.src = './cfg/retrieve_image.js';
 	document.body.appendChild(mainScript);
+	
+	// Use eventListener
+	parallel_processing.addEventListener("message", process_message, false);
+	parallel_processing.addEventListener("messageerror", process_messageerror, false);
+	parallel_processing.addEventListener("error", process_error, false);
+	
+	function process_message(event) {
+		
+		console.log("main.js - addEventListener parallel_processing message");
+	  
+		console.log("process_message - event.data: ", event.data);
+	
+		// Draw parallel processed data on canvas - drawing can only be performed on the main thread
+		const imageData = new ImageData(event.data, canvasElement.width, canvasElement.height);
+		canvasElement.getContext("2d").putImageData(imageData, 0, 0);
+	  
+		// console.log("main.js - event: ", event);
+
+		// Remove from thread
+		parallel_processing.terminate();
+	}
+	
+	function process_messageerror(event) {
+		console.log("main.js - addEventListener parallel_processing messageerror");
+		// console.log("main.js - event: ", event);
+
+		// Remove from thread
+		parallel_processing.terminate();
+	}
+	
+	function process_error(event) {
+		console.log("main.js - addEventListener parallel_processing error");
+		// console.log("main.js - event: ", event);
+
+		// Remove from thread
+		parallel_processing.terminate();
+	}
+	
 	
 	// --------------------
 	
