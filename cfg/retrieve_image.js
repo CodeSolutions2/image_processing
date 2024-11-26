@@ -1,7 +1,7 @@
 // self refers to the global object in the browser
 self.onmessage = function(event) {
-	// console.log("retrieve_image.js - event.data.type: ", event.data.type);  	// process
-	// console.log("retrieve_image.js - event.data.data: ", event.data.data);	// Typedarray
+	
+	console.log("retrieve_image.js - event.data.data: ", event.data.data);
 	console.log("retrieve_image.js - event: ", event);  	// [object MessageEvent]
 
 
