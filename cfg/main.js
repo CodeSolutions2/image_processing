@@ -12,7 +12,7 @@ if (window.Worker) {
 	// --------------------
 
 	// [1] Define parallel processing variable parallel_processing
-	var out = index_data.split('|');   	// `file_name|${file_name}|data|${normalArray}|type|process`
+	var out = index_data.split('|');   	// `file_name|${file_name}|data|${url}|type|${type_of_process}`
 	console.log("out: ", out);
 	
 	const file_name = out.at(1);
@@ -26,15 +26,13 @@ if (window.Worker) {
 	// [2] Send data to parallel_processing.js
 
 	// Convert string into an object
-	// const data = eval(out.at(3)); // array or string
-	// console.log("data: ", data);
+	const data = eval(out.at(3)); // array or string
+	console.log("data: ", data);
 	
-	// const type = out.at(5);  // string
-	// const obj_payload = {data: data, type: type};
-	// console.log("obj_payload: ", obj_payload);
+	const type = out.at(5);  // string
+	console.log("data: ", data);
 	
-	// parallel_processing.postMessage(obj_payload);
-	parallel_processing.postMessage("test");
+	parallel_processing.postMessage({data: data, type: type});
 	
 	// --------------------
 
