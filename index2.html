@@ -1,0 +1,424 @@
+
+<!DOCTYPE html>
+<html>
+<head></head>
+<body>
+
+<h1>Image processing function library</h1>
+A compilation of image processing functions that are useful for development.
+	
+<ol type="A">
+	<li>Select an image processing method from the dropdown list.</li>
+  	<li>Push run_selection to view the result. </li>
+</ol>
+
+<!-- ---------------------------------------- -->
+	
+<table style='text-align: left; width: 300px; display:block'>
+<tr>   
+<th id="inputs">
+	
+<label for="select_dropdown_option_label">Select an image processing example:</label>
+<select name="dropdown_options" id="dropdown_options" style="display:block">
+  <option value="---">Select an option</option>
+  <option value="image_data_color_change_w_NoParallelProcessing">image_data_color_change_w_NoParallelProcessing</option>
+  <option value="image_data_color_change_w_ParallelProcessing">image_data_color_change_w_ParallelProcessing</option>
+  <option value="image_retrieval_fetch_w_ParallelProcessing">image_retrieval_fetch_w_ParallelProcessing</option>
+  <option value="output_base64str_of_canvas">output_base64str_of_canvas</option>
+</select>
+
+<input type="text" name="text_input" id="text_input" value="" style="display:none;">
+
+<button id="run_selection" onclick="run_selection()" style="display:block;">run_selection</button>
+	
+</th>
+
+<!-- ---------------------------------------- -->
+
+<th id="outputs">
+	
+<div id="data_display" style="display:block; text-align: left; width: 600px;"></div>
+<canvas class="canvasElement_className" id="canvasElement_id" width="256" height="256" style="display:block"></canvas>
+<div class="obj_className" id="obj_div" style="display:none"></div>
+	
+</th>
+	
+<!-- ---------------------------------------- -->
+	
+</tr>
+</table>
+
+
+<!-- ---------------------------------------- -->
+	
+<style>
+canvas {border: 0px solid black; position: absolute; display: inline-block; z-index: 0; top: 175px;}
+
+table {vertical-align: top; border-collapse: collapse; position: relative; z-index: 0; border: 0px solid black;}
+
+tr {vertical-align: top; border: 0px solid black; padding: 30px 30px; }
+
+th, td {vertical-align: top; border: 0px solid black; padding: 10px; }
+</style>
+
+<!-- ---------------------------------------- -->
+  
+<script>
+
+// -------------------------------------------------
+
+window.addEventListener('beforeunload', function() {
+	window.location.href = window.location.href + '?nocache=' + new Date().getTime();
+	document.getElementById("dropdown_options").selectedIndex = 0;
+});
+
+// -------------------------------------------------
+	
+async function processEvent_dropdown_options(event) {
+
+	// there is nothing in event that tells which drop down was selected
+	// console.log('event: ', event);
+
+	const element = document.getElementById("dropdown_options");
+	
+	// console.log('element.selectedIndex: ', element.selectedIndex);
+	// OR
+	// console.log('element.options.selectedIndex: ', element.options.selectedIndex);
+	
+	if (document.getElementById("dropdown_options").selectedIndex == 3) {
+		document.getElementById("text_input").style.display = 'block';
+	} else {
+		document.getElementById("text_input").style.display = 'none';
+	}
+	
+}
+
+document.getElementById("dropdown_options").addEventListener("change", processEvent_dropdown_options, false);
+	
+// -------------------------------------------------
+	
+// const module0 = {};
+// const module1 = {};
+// const module2 = {};
+// const module3 = {};
+	
+// -------------------------------------------------
+
+var width = 256;
+var height = 256;
+
+// -------------------------------------------------
+
+
+async function run_selection() {
+	
+	// Put in a function in <script>
+	var dropdown_option_type = document.getElementById("dropdown_options").value;
+  
+	if (dropdown_option_type == 'image_data_color_change_w_NoParallelProcessing') {
+		await image_data_color_change_w_NoParallelProcessing();
+    
+	} else if (dropdown_option_type == 'image_data_color_change_w_ParallelProcessing') {
+		await image_data_color_change_w_ParallelProcessing();
+
+	} else if (dropdown_option_type == 'image_retrieval_fetch_w_ParallelProcessing') {
+		await image_retrieval_fetch_w_ParallelProcessing();
+		
+	} else if (dropdown_option_type == 'output_base64str_of_canvas') {
+		await output_base64str_of_canvas();
+		
+	} else {
+		console.log("Please select a drop down option type."); 
+	}
+
+}
+
+// -------------------------------------------------
+	
+async function image_data_color_change_w_NoParallelProcessing() {
+
+	// Non-parallel processing way
+
+	console.time('image_data_color_change_w_NoParallelProcessing');
+	
+	// --------------------
+	
+	// Canvas to obtain data from.
+	const [ctx, canvasElement] = await create_dynamic_canvasElement('canvasId', 'canvasElement_className');
+
+	// Add the canvas to the DOM
+	document.getElementById('data_display').appendChild(canvasElement);
+	document.getElementById('canvasId').style.border = '1px solid black';
+
+	// --------------------
+	
+	// await module1.create_a_solid_image(ctx);
+	// OR
+	await create_a_solid_image(ctx);
+
+	// --------------------
+
+	// Obtain canvas data as an array
+	const normalArray = await convert_canvas_into_ImageData(ctx);
+
+	// --------------------
+	
+	// Modify the canvas image data 
+	const Typedarray = await modify_canvas_data(normalArray);
+
+	// --------------------
+
+	// Put imageData on second canvas.
+	const imageData = await new ImageData(Typedarray, canvasElement.width, canvasElement.height);
+	await ctx.putImageData(imageData, 0, 0);
+
+	// --------------------
+	
+	console.timeEnd('image_data_color_change_w_NoParallelProcessing');  // 40ms
+}
+
+// -------------------------------------------------
+
+async function image_data_color_change_w_ParallelProcessing() {
+
+	// console.time('image_data_color_change_w_ParallelProcessing');
+
+	// --------------------
+	
+	// Canvas to obtain data from.
+	// Only HTML elements function for parallel processing.
+	// var canvasElement = document.getElementById('canvasElement_id');
+	// document.getElementById('canvasElement_id').style.border = '1px solid black';
+	// var ctx = canvasElement.getContext("2d");
+		    
+	// --------------------
+
+	// Prints original image to canvas, without parallel processing result.
+	// await create_a_solid_image(ctx);
+
+	// --------------------
+
+	// Obtain canvas data as an array
+	// const normalArray = await convert_canvas_into_ImageData(ctx);
+
+	// --------------------
+	
+	// Output data to main.js
+	// const file_name = "image_data_color_change.js";
+	// document.getElementById("obj_div").innerHTML = `file_name|${file_name}|data|${normalArray}|type|process`;
+
+	// --------------------
+
+	// Call main.js
+	// const mainScript = document.createElement('script');
+	// mainScript.src = './cfg/main.js';
+	// document.body.appendChild(mainScript);
+	
+	// --------------------
+	
+	// console.timeEnd('image_data_color_change_w_ParallelProcessing'); // 45ms
+
+}
+
+// -------------------------------------------------
+
+async function image_retrieval_fetch_w_ParallelProcessing() {
+
+	console.time('image_retrieval_fetch_w_ParallelProcessing');
+
+	// --------------------
+	
+	// Canvas to obtain data from.
+	// Only HTML elements function for parallel processing.
+	var canvasElement = document.getElementById('canvasElement_id');
+	document.getElementById('canvasElement_id').style.border = '1px solid black';
+	var ctx = canvasElement.getContext("2d");
+		    
+	// --------------------
+
+	// Obtain desired url
+	if (document.getElementById("text_input").value.length > 0) {
+		var url = document.getElementById("text_input").value;
+	} else {
+		var url = "https://storage.googleapis.com/on-the-way2selfrespect/yellow.png";
+	}
+	// var url = document.getElementById("text_input").value.length > 0 ? document.getElementById("text_input").value : "https://storage.googleapis.com/on-the-way2selfrespect/yellow.png";
+	
+	// --------------------
+
+	// Output data to main.js
+	const file_name = "retrieve_image.js";
+  const type_of_process = "process";
+	document.getElementById("obj_div").innerHTML = `file_name|${file_name}|data|${url}|type|${type_of_process}`;
+
+	// --------------------
+
+	// Call main.js
+	const mainScript = document.createElement('script');
+	mainScript.src = './cfg/main.js';
+	document.body.appendChild(mainScript);
+	
+	// --------------------
+	
+	console.timeEnd('image_retrieval_fetch_w_ParallelProcessing'); 
+
+}
+	
+// -------------------------------------------------
+
+async function output_base64str_of_canvas() {
+
+	// Canvas to obtain data from.
+	const [ctx, canvasElement] = await create_dynamic_canvasElement('canvasId', 'canvasElement_className');
+
+	// Add the canvas to the DOM
+	document.getElementById('data_display').appendChild(canvasElement);
+	document.getElementById('canvasId').style.border = '1px solid black';
+
+	// --------------------
+	
+	// await module1.create_a_solid_image(ctx);
+	// OR
+	await create_a_solid_image(ctx);
+
+	// --------------------
+	
+	const [ASCII_str, base64_string] = await convert_canvas_to_base64str(ctx, canvasElement);
+
+	// --------------------
+	
+	document.getElementById("obj_div").style.display = 'block';
+	document.getElementById("obj_div").innerHTML = 'Base64 string of canvas image: <br></br>' + base64_string;
+
+	// --------------------
+		
+}
+	
+// -------------------------------------------------
+
+	
+// -------------------------------------------------
+
+
+
+
+
+
+	
+// -------------------------------------------------
+// IMAGE SUBFUNCTIONS
+// -------------------------------------------------
+async function create_dynamic_canvasElement(canvasElement_id, canvasElement_className) {
+	
+	const index = 0;
+  
+	// Create a canvas element
+	var canvasElement = document.createElement('canvas');
+
+	// Set attributes of the canvas
+	canvasElement.width = width;
+	canvasElement.height = height;
+  	canvasElement.id = canvasElement_id;
+	canvasElement.class = canvasElement_className;
+	
+	// Get the 2D rendering context of the canvas
+	var ctx = canvasElement.getContext("2d");
+
+		if (index == 0) {
+			canvasElement.style.left = 40+'px';
+		} else {
+			let tot = index*canvasElement.width + 40;
+			canvasElement.style.left = tot+'px';
+		}
+
+	return [ctx, canvasElement];
+}
+
+// -------------------------------------------------
+	
+async function create_a_solid_image(ctx) {
+	
+	var r = Math.floor(Math.random()*255);
+	var g = Math.floor(Math.random()*255);
+  	var b = Math.floor(Math.random()*255);
+  	const alpha = Math.floor(Math.random()*100);
+  
+  	// ----------------------
+  
+  	// Make r, g, b and interesting color range.
+	// Make r from 1 to 255 if r>1, then output=r else output=1
+	r = r>0 ? r : 1;
+	g = g>0 ? g : 1;
+	b = b>0 ? b : 1;
+
+	// ----------------------
+	
+	ctx.fillStyle = `rgb(${r} ${g} ${b} / ${alpha}%)`;
+	ctx.fillRect(0, 0, width, height);
+}
+
+// -------------------------------------------------
+
+async function convert_canvas_into_ImageData(ctx) {
+	
+	// Get canvas image
+	const uint8ClampedArray = await ctx.getImageData(0, 0, width, height); // TypedArray  Uint8ClampedArray
+	// console.log('uint8ClampedArray: ', uint8ClampedArray);
+  
+	// Convert TypedArray to normalArray
+	return normalArray = await Array.from(uint8ClampedArray.data);
+}
+
+// -------------------------------------------------
+
+async function modify_canvas_data(normalArray) {
+
+	// Modify some of the pixels, to determine if there is a change
+	const color_name = ['r', 'g', 'b', 'alpha'];
+	for ( let i=0; i<normalArray.length; i+=color_name.length ) {
+		if ( i > normalArray.length/2 && i % 2 == 0) {
+			normalArray[i] = 255;
+			normalArray[i+1] = 255;
+			normalArray[i+2] = 255;
+		}
+	}
+
+	return await new Uint8ClampedArray(normalArray);
+}
+
+// -------------------------------------------------
+
+async function convert_canvas_to_base64str(ctx, canvasElement) {
+	
+	// -----------------------------
+	
+	// Get canvas image
+	const uint8ClampedArray = await ctx.getImageData(0, 0, canvasElement.width, canvasElement.height); // TypedArray  Uint8ClampedArray
+	// console.log('uint8ClampedArray: ', uint8ClampedArray);
+
+	// Convert TypedArray to normalArray
+	const normalArray = await Array.from(uint8ClampedArray.data);
+	// console.log('normalArray: ', normalArray);
+	
+	// Convert [normalArray of bytes] to text_characters
+	var ASCII_stringArray = normalArray.map((val) => { return String.fromCharCode(val); });
+	// console.log('ASCII_stringArray: ', ASCII_stringArray);
+	
+	// Join all the ASCII characters to form a string
+	var ASCII_str = ASCII_stringArray.join('');
+	// console.log("ASCII_str: ", ASCII_str);
+	
+	// Transform ASCII string into a base64 string
+	var base64_string = btoa(ASCII_str);
+	// console.log("base64_string: ", base64_string);
+
+	// -----------------------------
+
+	return [ASCII_str, base64_string];
+}
+	
+// -------------------------------------------------
+
+</script>
+</body>
+</html>
