@@ -31,7 +31,7 @@ self.onmessage = function(event) {
 	// Fetch data
 	fetch(url, options)
 		.then(response => response.arrayBuffer())
-		.then(async function(arraybuffer) {
+		.then(function(arraybuffer) {
 			console.log("arraybuffer: ", arraybuffer);
 			
 			// Send processed data back to main thread
@@ -44,7 +44,7 @@ self.onmessage = function(event) {
 	
 	fetch(url, options)
 		.then(response => response.blob())
-		.then(async function(blob) {
+		.then(function(blob) {
 			const url = URL.createObjectURL(blob);
 			console.log("arraybuffer: ", arraybuffer);
 
